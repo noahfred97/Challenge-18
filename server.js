@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/socialnetworkapi",
+  process.env.MONGODB_URI || "mongodb://localhost:27017/socialnetworkapi",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

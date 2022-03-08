@@ -17,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/noahfred97/Challenge-18/issues"
   },
-  "homepage": "https://github.com/noahfred97/Challenge-18#readme"
+  "homepage": "https://github.com/noahfred97/Challenge-18#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongo": "^0.1.0",
+    "mongodb": "^4.4.1",
+    "mongoose": "^6.2.4"
+  }
 }

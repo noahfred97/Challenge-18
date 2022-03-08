@@ -1,11 +1,11 @@
-const { User, Thoughts } = require("../models");
+const { User, Thought } = require("../models");
 
 const userController = {
 
   getAllUsers(req, res) {
     User.find({})
       .populate({
-        path: "thoughts",
+        path: "thought",
         select: "-__v",
       })
       .populate({
@@ -24,7 +24,7 @@ const userController = {
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
       .populate({
-        path: "thoughts",
+        path: "thought",
         select: "-__v",
       })
       .populate({
@@ -77,7 +77,7 @@ const userController = {
         return;
       }
 
-      Thoughts.deleteMany({ _id: { $in: deletedUser.thoughts } }).then(() => {
+      Thought.deleteMany({ _id: { $in: deletedUser.thought } }).then(() => {
         res.status(200).json({
           message: `User with id: ${params.id} has been removed! The user's thoughts have been removed!`,
         });
