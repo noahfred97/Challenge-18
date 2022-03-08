@@ -1,34 +1,43 @@
-const { Schema, Types } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
+const Reaction = require("./Reaction");
 
-const ReactionSchema = new Schema(
+const ThoughtsSchema = new Schema(
   {
-    reactionId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    reactionBody: {
+    thoughtText: {
       type: String,
-      required: [true, "Please enter a reaction"],
+      required: [true,"Please provide a thought"],
       minlength: 1,
       maxlength: 280,
-    },
-    username: {
-      type: String,
-      required: [true, "Please enter a username"]
     },
     createdAt: {
       type: Date,
       default: Date.now,
       get: (createdAtVal) => dateFormat(createdAtVal),
     },
+    // the user that create this thought
+    username: {
+      type: String,
+      required: [true,"Please enter a username"],
+    },
+
+    reactions: [Reaction],
   },
   {
     toJSON: {
+      virtuals: true,
       getters: true,
     },
+    // prevents virtuals from creating duplicate of _id as `id`
     id: false,
   }
 );
 
-module.exports = ReactionSchema;
+// get total count of reaction on retrieval
+ThoughtsSchema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
+
+const Thoughts = model("Thoughts", ThoughtsSchema);
+
+module.exports = Thoughts;
